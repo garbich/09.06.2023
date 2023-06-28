@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct Car {
+	string color;
+	string model;
+	string number;
+};
+
+void fill_car(Car& car) {
+	cout << "enter color: ";
+	cin >> car.color;
+	cout << "enter model: ";
+	cin >> car.model;
+	cout << "enter number: ";
+	cin >> car.number;
+
+}
+
+void print_car(const Car& car) {
+	cout << "color: " << car.color << endl;
+	cout << "model: " << car.model << endl;
+	cout << "number: " << car.number << endl;
+}
+void edit_car(Car& car) {
+	cout << "enter new color: ";
+	cin >> car.color;
+	cout << "enter new model: ";
+	cin >> car.model;
+	cout << "enter new number: ";
+	cin >> car.number;
+}
+
+void print_all_cars(const Car cars[], int size) {
+	for (int i = 0; i < size; ++i) {
+		cout << "car" << i + 1 << endl;
+		print_car(cars[i]);
+		cout << endl;
+	}
+}
+
+int find_car_by_number(const Car cars[], int size, const string& number) {
+	for (int i = 0; i < size; ++i) {
+		if (cars[i].number == number) {
+			return i;
+		}
+	}
+	return -1;
+}
+int main(){
+	const int num_cars = 10;
+	Car cars[num_cars];
+
+	for (int i = 0; i < num_cars; ++i) {
+		cout << "enter detail for car " << i + 1 << ":" << endl;
+		fill_car(cars[i]);
+		cout << endl;
+	}
+
+	cout << "all cars: " << endl;
+	print_all_cars(cars, num_cars);
+	cout << endl;
+
+	int car_index;
+	cout << "enter the index of the car you want to edit: ";
+	cin >> car_index;
+
+	if (car_index >= 1 && car_index <= num_cars) {
+		Car& car_to_edit = cars[car_index - 1];
+		cout << "editing car " << car_index << ":" << endl;
+		edit_car(car_to_edit);
+		cout << "car" << car_index << " edited successfully." << endl;
+	}
+	else {
+		cout << "invalid car index." << endl;
+	}
+	cout << endl;
+
+	cout << "all cars after editing: " << endl;
+	print_all_cars(cars, num_cars);
+	cout << endl;
+
+	string search_number;
+	cout << "enter the number of the car you want to search: ";
+	cin >> search_number;
+
+	int found_car_index = find_car_by_number(cars, num_cars, search_number);
+	if (found_car_index != -1) {
+		cout << "car found at index " << found_car_index + 1 << ":" << endl;
+		print_car(cars[found_car_index]);
+
+	}
+	else {
+		cout << "car with number " << search_number << " not found. " << endl;
+	}
+
+}
+
